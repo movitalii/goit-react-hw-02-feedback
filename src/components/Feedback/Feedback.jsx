@@ -33,18 +33,18 @@ class Feedback extends Component {
         });
     };
 
-    countTotalFeedback = () => {     
-        const prevState = this.props.initialValue + prevState;
-        const total = prevState + (this.state.good + this.state.neutral + this.state.bad);
-        console.log(total);
-    }
+    // countTotalFeedback = () => {     
+    //     const prevState = this.props.initialValue + prevState;
+    //     const total = prevState + (this.state.good + this.state.neutral + this.state.bad);
+    //     console.log(total);
+    // }
 
     render() {
         return (
             <div className={css.feedback}>
                 <h2 className={css.title}>Please leave feedback</h2>
                 <div className={css.feedback_options}>
-                    <button type="button" className={css.option_btn} onClick={() => this.voteGood()}>Good</button>
+                    <button type="button" className={css.option_btn} onClick={this.voteGood}>Good</button>
                     <button type="button" className={css.option_btn} onClick={this.voteNeutral}>Neutral</button>
                     <button type="button" className={css.option_btn} onClick={this.voteBad}>Bad</button>
                 </div>
@@ -54,7 +54,7 @@ class Feedback extends Component {
                         <span className={css.vote}>Good: {this.state.good}</span>
                         <span className={css.vote}>Neutral: {this.state.neutral}</span>
                         <span className={css.vote}>Bad: {this.state.bad}</span>
-                        <span className={css.vote}>Total: {this.props.initialValue}</span>
+                        {/* <span className={css.vote}>Total: {this.props.initialValue}</span> */}
                         {/* <span className={css.vote}>Positive feedback: {this.props.initialValue}</span> */}
                     </div>                    
                 </div>
