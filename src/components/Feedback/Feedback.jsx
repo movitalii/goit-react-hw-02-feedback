@@ -14,7 +14,6 @@ class Feedback extends Component {
                 good: prevState.good + 1
             }
         });
-        this.countTotalFeedback();
     };
 
     voteNeutral = () => {
@@ -33,13 +32,28 @@ class Feedback extends Component {
         });
     };
 
-    // countTotalFeedback = () => {     
-    //     const prevState = this.props.initialValue + prevState;
-    //     const total = prevState + (this.state.good + this.state.neutral + this.state.bad);
-    //     console.log(total);
-    // }
+    countTotalFeedback() {
+        const { good, neutral, bad } = this.state;
+
+        return good + neutral + bad;
+    };
+
+    countPositiveFeedbackPercentage() {
+        let goodPercentage = 0;
+        const totalFeddbacks = this.countTotalFeedback();
+        const goodFeddbacks = this.state.good;
+
+        if (totalFeddbacks !== 0) {
+            goodPercentage = Math.round((goodFeddbacks * 100) / totalFeddbacks);
+        }        
+
+        return goodPercentage;
+    }
 
     render() {
+        const total = this.countTotalFeedback();
+        const positivePercentage = this.countPositiveFeedbackPercentage();
+
         return (
             <div className={css.feedback}>
                 <h2 className={css.title}>Please leave feedback</h2>
@@ -50,13 +64,20 @@ class Feedback extends Component {
                 </div>
                 <div className={css.statistics}>
                     <h2 className={css.title_stat}>Statistics</h2>
-                    <div className={css.votes}>
-                        <span className={css.vote}>Good: {this.state.good}</span>
-                        <span className={css.vote}>Neutral: {this.state.neutral}</span>
-                        <span className={css.vote}>Bad: {this.state.bad}</span>
-                        {/* <span className={css.vote}>Total: {this.props.initialValue}</span> */}
-                        {/* <span className={css.vote}>Positive feedback: {this.props.initialValue}</span> */}
-                    </div>                    
+                    
+                        {total
+                            ?
+                            <div className={css.votes}>
+                                <span className={css.vote}>Good: {this.state.good}</span>
+                                <span className={css.vote}>Neutral: {this.state.neutral}</span>
+                                <span className={css.vote}>Bad: {this.state.bad}</span>
+                                <span className={css.vote}>Total: {total}</span>
+                                <span className={css.vote}>Positive feedback: { positivePercentage }%</span>
+                            </div>                            
+                            
+                            : <span className={css.no_votes}>There is no feedback</span>
+                        }                       
+                                        
                 </div>
             </div>
         );
